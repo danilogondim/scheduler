@@ -4,6 +4,12 @@ export function getAppointmentsForDay(state, day) {
   return appointments;
 }
 
+export function getInterviewersForDay(state, day) {
+  const filteredDay = state.days.find(elem => elem.name === day)
+  const interviewers = filteredDay ? filteredDay.interviewers.map(elem => state.interviewers[elem]) : [];
+  return interviewers;
+}
+
 export function getInterview(state, interview) {
   // if an interview exists, we should return the interview object with the interviewer value updated (value as object instead of id)
   if (interview) {
