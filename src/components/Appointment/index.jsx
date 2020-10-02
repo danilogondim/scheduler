@@ -1,17 +1,20 @@
 import React from 'react';
 
-import './styles.scss'
+import './styles.scss';
 
 import Header from 'components/Appointment/Header';
-import Show from 'components/Appointment/Show';
 import Empty from 'components/Appointment/Empty';
+import Show from 'components/Appointment/Show';
 import Form from 'components/Appointment/Form';
 import Status from 'components/Appointment/Status';
-import useVisualMode from '../../hooks/useVisualMode'
+import Confirm from 'components/Appointment/Confirm';
+import useVisualMode from '../../hooks/useVisualMode';
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
+const DELETING = "DELETING";
+const CONFIRM = "CONFIRM";
 
 const Appointment = props => {
 
@@ -25,11 +28,17 @@ const Appointment = props => {
         student: name,
         interviewer
       };
-      transition(SAVING)
+      transition(SAVING);
       props.bookInterview(props.id, interview)
-      .then(() => transition(SHOW))
+        .then(() => transition(SHOW));
     }
-  }
+  };
+
+  function deleteInterview() {
+    transition(DELETING);
+    props.cancelInterview(props.id)
+      .then(() => transition(EMPTY));
+  };
 
   return (
     <article className="appointment">
@@ -40,7 +49,7 @@ const Appointment = props => {
           student={props.interview.student}
           interviewer={props.interview.interviewer}
           onEdit={() => console.log("Clicked onEdit")}
-          onDelete={() => console.log("Clicked onDelete")}
+          onDelete={() => transition(CONFIRM)}
         />
       )}
       {mode === CREATE && (
@@ -55,6 +64,18 @@ const Appointment = props => {
           message='Saving'
         />
       )}
+      {mode === DELETING && (
+        <Status
+          message='Deleting'
+        />
+      )}
+      {mode === CONFIRM && (
+        <Confirm
+          message='Delete the appointment?'
+          onConfirm={deleteInterview}
+          onCancel={() => back()}
+        />
+      )}
     </article>
   )
 };
@@ -63,8 +84,6 @@ export default Appointment;
 
 // copy from tests to help to work with the new components when necessary:
 
-// <Confirm message="Delete the appointment?" onConfirm={action("onConfirm")} onCancel={action("onCancel")} />
-// <Status message="Deleting" />
 // <Error message='Could not delete appointment.' onClose={action("onClose")} />
 // <Form
 //   name="Archie Cohen"
