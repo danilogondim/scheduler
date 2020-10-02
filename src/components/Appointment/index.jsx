@@ -15,6 +15,7 @@ const CREATE = "CREATE";
 const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
+const EDIT = "EDIT";
 
 const Appointment = props => {
 
@@ -44,16 +45,25 @@ const Appointment = props => {
     <article className="appointment">
       <Header time={props.time} />
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
+      {mode === CREATE && (
+        <Form
+          interviewers={props.interviewers}
+          onSave={save}
+          onCancel={() => back()}
+        />
+      )}
       {mode === SHOW && (
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}
-          onEdit={() => console.log("Clicked onEdit")}
+          onEdit={() => transition(EDIT)}
           onDelete={() => transition(CONFIRM)}
         />
       )}
-      {mode === CREATE && (
+      {mode === EDIT && (
         <Form
+          name={props.interview.student}
+          interviewer={props.interview.interviewer.id}
           interviewers={props.interviewers}
           onSave={save}
           onCancel={() => back()}
@@ -85,10 +95,3 @@ export default Appointment;
 // copy from tests to help to work with the new components when necessary:
 
 // <Error message='Could not delete appointment.' onClose={action("onClose")} />
-// <Form
-//   name="Archie Cohen"
-//   interviewers={interviewers}
-//   interviewer={1}
-//   onSave={action("onSave")}
-//   onCancel={action("onCancel")}
-// />;
