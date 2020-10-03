@@ -54,18 +54,6 @@ export default function useApplicationData() {
       })
     }
 
-
-    // const day = {...state.days.find(elem => elem.appointments.includes(id))}
-    // if (!state.appointments[id].interview) {
-    //   day.spots--;
-    // }
-    // const days = [...state.days].map(elem => {
-    //   if (elem.name === state.day) {
-    //     return day;
-    //   }
-    //   return elem;
-    // })
-
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
