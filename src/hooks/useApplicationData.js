@@ -41,16 +41,30 @@ export default function useApplicationData() {
 
 
   function bookInterview(id, interview) {
-    const day = {...state.days.find(elem => elem.appointments.includes(id))}
+
+    let days = [...state.days];
     if (!state.appointments[id].interview) {
+      const day = { ...days.find(elem => elem.appointments.includes(id)) };
       day.spots--;
+      days = days.map(elem => {
+        if (elem.name === state.day) {
+          return day;
+        }
+        return elem;
+      })
     }
-    const days = [...state.days].map(elem => {
-      if (elem.name === state.day) {
-        return day;
-      }
-      return elem;
-    })
+
+
+    // const day = {...state.days.find(elem => elem.appointments.includes(id))}
+    // if (!state.appointments[id].interview) {
+    //   day.spots--;
+    // }
+    // const days = [...state.days].map(elem => {
+    //   if (elem.name === state.day) {
+    //     return day;
+    //   }
+    //   return elem;
+    // })
 
     const appointment = {
       ...state.appointments[id],
@@ -71,7 +85,7 @@ export default function useApplicationData() {
 
   function cancelInterview(id) {
 
-    const day = {...state.days.find(elem => elem.appointments.includes(id))}
+    const day = { ...state.days.find(elem => elem.appointments.includes(id)) };
     day.spots++;
     const days = [...state.days].map(elem => {
       if (elem.name === state.day) {
