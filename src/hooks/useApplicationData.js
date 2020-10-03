@@ -1,10 +1,11 @@
 
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { getAppointmentsForDay } from '../helpers/selectors'
 
 export default function useApplicationData() {
 
-  
+
   const [state, setState] = useState({
     day: 'Monday',
     days: [],
@@ -28,6 +29,17 @@ export default function useApplicationData() {
   }, []);
 
 
+  // to calculate how many spots we have left, I need to check how many interviews are set to null for each day and return a new days array
+  const availableSpots = state => {
+    const newState = { ...state }
+    const days = newState.days.map(day => {
+      const spots = getAppointmentsForDay(newState, day.name).filter(appointment => appointment.interview === null).length;
+      return { ...day, spots }
+    })
+    return days;
+  }
+
+
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -40,10 +52,8 @@ export default function useApplicationData() {
     return axios
       .put(`/api/appointments/${id}`, appointment)
       .then(() => {
-        setState({
-          ...state,
-          appointments
-        })
+        setState(prev => ({ ...prev, appointments }))
+        setState(prev => ({ ...prev, days: availableSpots(prev) }))
       });
   };
 
@@ -60,10 +70,8 @@ export default function useApplicationData() {
     return axios
       .delete(`/api/appointments/${id}`)
       .then(() => {
-        setState({
-          ...state,
-          appointments
-        })
+        setState(prev => ({ ...prev, appointments }))
+        setState(prev => ({ ...prev, days: availableSpots(prev) }))
       });
   };
 
