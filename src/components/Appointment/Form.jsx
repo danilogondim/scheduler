@@ -14,6 +14,7 @@ const Form = props => {
   }
 
   const cancel = () => {
+    setError("");
     reset();
     props.onCancel();
   }
@@ -23,8 +24,8 @@ const Form = props => {
       setError("Student name cannot be blank");
       return;
     }
-    // setError("");
-  
+
+    setError("");
     props.onSave(name, interviewer);
   }
 
