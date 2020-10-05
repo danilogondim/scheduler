@@ -27,7 +27,7 @@ const Appointment = props => {
   );
 
   function save(name, interviewer) {
-    if (name && interviewer) {
+    if (interviewer) {
       const interview = {
         student: name,
         interviewer
