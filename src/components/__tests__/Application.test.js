@@ -1,6 +1,6 @@
 import React from "react";
 
-import { render, cleanup, waitForElement, fireEvent, getByText, prettyDOM, getAllByTestId, getByAltText, getByPlaceholderText } from "@testing-library/react";
+import { render, cleanup, waitForElement, waitForElementToBeRemoved, fireEvent, getByText, prettyDOM, getAllByTestId, getByAltText, getByPlaceholderText, queryByText } from "@testing-library/react";
 
 import Application from "components/Application";
 
@@ -49,15 +49,21 @@ describe("Application", () => {
     // Check that the element with the text "Saving" is displayed.
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
 
-    // Wait until the text "Lydia Miller-Jones" is displayed in out appointment element.
-    await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
+    // option 1: Wait until the Saving status is removed and then check if the student name is present in the document
+    // await waitForElementToBeRemoved(() => getByText(appointment, "Saving"));
+    // expect(getByText(appointment, "Lydia Miller-Jones")).toBeInTheDocument();
+
+    // option 2: Wait until the text "Lydia Miller-Jones" is displayed in our appointment element. The test if the student name is in the document is implicit
+    await waitForElement(() => queryByText(appointment, "Lydia Miller-Jones"));
 
     // Check that the DayListItem with the text "Monday" also has the text "no spots remaining".
+    const day = getAllByTestId(container, "day").find(day =>
+      queryByText(day, "Monday")
+    );
 
+    expect(getByText(day, "no spots remaining")).toBeInTheDocument();
 
   });
-
-
 })
 
 
