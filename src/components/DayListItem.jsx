@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from 'classnames';
-import 'components/DayListItem.scss'
+import 'components/DayListItem.scss';
 
 
 export default function DayListItem(props) {
@@ -28,4 +28,4 @@ export default function DayListItem(props) {
       <h3 className="text--light">{formatSpots(props.spots)}</h3>
     </li>
   );
-}
+};

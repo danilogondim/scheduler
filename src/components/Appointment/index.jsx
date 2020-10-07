@@ -1,7 +1,4 @@
 import React from 'react';
-
-import './styles.scss';
-
 import Header from 'components/Appointment/Header';
 import Empty from 'components/Appointment/Empty';
 import Show from 'components/Appointment/Show';
@@ -10,6 +7,9 @@ import Status from 'components/Appointment/Status';
 import Confirm from 'components/Appointment/Confirm';
 import Error from 'components/Appointment/Error';
 import useVisualMode from '../../hooks/useVisualMode';
+
+import './styles.scss';
+
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
@@ -106,7 +106,7 @@ const Appointment = props => {
         />
       )}
     </article>
-  )
+  );
 };
 
 export default Appointment;

@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '../Button'
+import Button from '../Button';
 
 const Confirm = props => {
   return (
@@ -10,7 +10,7 @@ const Confirm = props => {
         <Button onClick={props.onConfirm} danger>Confirm</Button>
       </section>
     </main>
-  )
-}
+  );
+};
 
 export default Confirm;

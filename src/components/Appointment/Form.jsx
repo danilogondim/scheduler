@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 import InterviewerList from 'components/InterviewerList';
-import Button from 'components/Button'
+import Button from 'components/Button';
 
 const Form = props => {
 
-  const [name, setName] = useState(props.name || "")
-  const [interviewer, setInterviewer] = useState(props.interviewer || null)
+  const [name, setName] = useState(props.name || "");
+  const [interviewer, setInterviewer] = useState(props.interviewer || null);
   const [error, setError] = useState("");
 
   const reset = () => {
-    setName("")
-    setInterviewer(null)
-  }
+    setName("");
+    setInterviewer(null);
+  };
 
   const cancel = () => {
     setError("");
     reset();
     props.onCancel();
-  }
+  };
 
   function validate() {
     if (name === "") {
@@ -57,7 +57,7 @@ const Form = props => {
         </section>
       </section>
     </main>
-  )
-}
+  );
+};
 
 export default Form;
