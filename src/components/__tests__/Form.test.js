@@ -29,23 +29,22 @@ describe("Form", () => {
     expect(getByTestId("student-name-input")).toHaveValue("Lydia Miller-Jones");
   });
 
-  it("validates that the student name is not blank", () => {
+  it("validates that the student name is not blank and prevents submission", () => {
     /* 1. Create the mock onSave function */
     const onSave = jest.fn();
 
-    /* 2. Render the Form with interviewers and the onSave mock function passed as an onSave prop, the name prop should be blank or undefined */
+    /* 2. Render the Form with interviewers and onSave passed as props */
     const { getByText } = render(
       <Form
         interviewers={interviewers}
         onSave={onSave}
       />
-    )
+    );
 
     /* 3. Click the save button */
     fireEvent.click(getByText("Save"));
 
-
-    /* 4. check if the validation text is shown when the name is blank or undefined and there is an attempt to save */
+    /* 4. check if the validation text is shown when the name is blank and there is an attempt to save */
     expect(getByText(/student name cannot be blank/i)).toBeInTheDocument();
 
     /* 5. check if we had prevented that onSave was called */
