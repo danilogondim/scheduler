@@ -149,7 +149,7 @@ describe("Application", () => {
     fireEvent.click(getByAltText(appointment, "Add"));
     fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
       target: { value: "Lydia Miller-Jones" }
-    })
+    });
     fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
     fireEvent.click(getByText(appointment, "Save"));
 
@@ -167,21 +167,38 @@ describe("Application", () => {
 
   });
 
-  it("shows the delete error when failing to delete an existing appointment", () => {
+  it("shows the delete error when failing to delete an existing appointment", async () => {
+    // make sure that the first request to our axios mocked library will reject
     axios.delete.mockRejectedValueOnce();
 
+    // 1. Render the Application.
+    const { container } = render(<Application />);
+
+    // 2. Wait until the text "Archie Cohen" is displayed.
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+
+    // 3. Click the "Delete" button on the booked appointment.
+    const appointment = getAllByTestId(container, "appointment").find(
+      appointment => queryByText(appointment, "Archie Cohen")
+    );
+    fireEvent.click(queryByAltText(appointment, "Delete"));
+
+    // 4. Check that the confirmation message is shown.
+    expect(getByText(appointment, "Delete the appointment?")).toBeInTheDocument();
+
+    // 5. Click the "Confirm" button on the confirmation.
+    fireEvent.click(queryByText(appointment, "Confirm"));
+
+    // 6. Check that the element with the text "Deleting" is displayed.
+    expect(getByText(appointment, "Deleting")).toBeInTheDocument();
+
+    // 7. Check if the deletion has failed by waiting deleting to disappear and confirm that the error msg is in our component
+    await waitForElementToBeRemoved(() => queryByText(appointment, "Deleting"));
+    expect(getByText(appointment, "Could not delete appointment.")).toBeInTheDocument();
+
+    // 8. Press the close image and make sure that the error is not in the document and that the form is showing again
+    fireEvent.click(getByAltText(appointment, "Close"));
+    expect(queryByText(appointment, "Error")).not.toBeInTheDocument();
+    expect(getByAltText(appointment, "Delete")).toBeInTheDocument();
   });
-
 });
-
-
-/*
-About the Application Test Suite:
-  We will mock the functions we use from the axios library.
-  We will write a test to confirm that the scheduler can load data.
-  We will write an asynchronous test that waits for a component to update before proceeding.
-  We will use containers to find specific DOM nodes.
-  We will chain promises to handle asynchronous testing.
-  We will override mock implementations for specific tests.
-  We will use setup and teardown functions provided by Jest to perform common tasks.
-*/
