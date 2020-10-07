@@ -36,7 +36,7 @@ describe("Appointments", () => {
     cy.get("[alt=Edit]").click({ force: true });
 
     // 2. Changes the name and interviewer
-    cy.get("[data-testid=student-name-input]").clear().type("Lydia Miller-Jones")
+    cy.get("[data-testid=student-name-input]").clear().type("Lydia Miller-Jones");
     cy.get("[alt='Tori Malcolm']").click();
 
     // 3. Clicks the save button
@@ -63,4 +63,4 @@ describe("Appointments", () => {
     // 5. Confirms that the appointment with the original student name is gone
     cy.contains(".appointment__card--show", "Archie Cohen").should("not.exist");
   });
-})
+});

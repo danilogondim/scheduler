@@ -1,6 +1,6 @@
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 
-
+// mock data to test the selectors
 const state = {
   days: [
     {
@@ -8,7 +8,6 @@ const state = {
       name: "Monday",
       appointments: [1, 2, 3],
       interviewers: [1, 2]
-
     },
     {
       id: 2,
@@ -46,6 +45,8 @@ const state = {
   }
 };
 
+
+// tests the getAppointmentsForDat selector
 test("getAppointmentsForDay returns an array", () => {
   const result = getAppointmentsForDay(state, "Monday");
   expect(Array.isArray(result)).toBe(true);
@@ -73,9 +74,7 @@ test("getAppointmentsForDay returns an empty array when the day is not found", (
 });
 
 
-
-
-
+// tests the getInterviewersForDay selector
 test("getInterviewersForDay returns an array", () => {
   const result = getInterviewersForDay(state, "Monday");
   expect(Array.isArray(result)).toBe(true);
@@ -103,9 +102,7 @@ test("getInterviewersForDay returns an empty array when the day is not found", (
 });
 
 
-
-
-
+// tests the getInterview selector
 test("getInterview returns an object with the interviewer data", () => {
   const result = getInterview(state, state.appointments["3"].interview);
   expect(result).toEqual(
