@@ -6,6 +6,7 @@ export default function useVisualMode(initial) {
   // eslint-disable-next-line
   const [history, setHistory] = useState([initial]);
 
+
   function transition(newMode, replace = false) {
 
     if (replace) {
@@ -21,6 +22,7 @@ export default function useVisualMode(initial) {
     setMode(newMode);
   };
 
+  
   function back() {
 
     setHistory(prev => {

@@ -1,10 +1,7 @@
-
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-// import { getAppointmentsForDay } from '../helpers/selectors'
 
 export default function useApplicationData() {
-
 
   const [state, setState] = useState({
     day: 'Monday',
@@ -13,9 +10,7 @@ export default function useApplicationData() {
     interviewers: {}
   });
 
-
   const setDay = day => setState({ ...state, day });
-
 
   useEffect(() => {
     Promise.all([
@@ -24,28 +19,24 @@ export default function useApplicationData() {
       axios.get('/api/interviewers')
     ])
       .then(all => {
-        setState(prev => ({ ...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
+        setState(prev => ({
+          ...prev,
+          days: all[0].data,
+          appointments: all[1].data,
+          interviewers: all[2].data
+        }));
       });
   }, []);
-
-
-  // to calculate how many spots we have left, I need to check how many interviews are set to null for each day and return a new days array
-  // const availableSpots = state => {
-  //   const newState = { ...state }
-  //   const days = newState.days.map(day => {
-  //     const spots = getAppointmentsForDay(newState, day.name).filter(appointment => appointment.interview === null).length;
-  //     return { ...day, spots }
-  //   })
-  //   return days;
-  // }
 
 
   function bookInterview(id, interview) {
 
     let days = [...state.days];
+    // we should only change the number of spots for a given day if we are creating a new appointment. Editing an existing appointment should not change the number of spots. So we need to first check if there isn't in our state an interview set for the given appointment id
     if (!state.appointments[id].interview) {
       const day = { ...days.find(elem => elem.appointments.includes(id)) };
       day.spots--;
+      // recreate the days arrays by updating only the day that we had changed the number of spots
       days = days.map(elem => {
         if (elem.name === state.day) {
           return day;
@@ -62,19 +53,21 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
+
     return axios
       .put(`/api/appointments/${id}`, appointment)
       .then(() => {
         setState(prev => ({ ...prev, appointments, days }));
-        // setState(prev => ({ ...prev, days: availableSpots(prev) }));
       });
   };
 
 
   function cancelInterview(id) {
 
+    // cancelling an appointment will always increase the number of spots for a given day by one
     const day = { ...state.days.find(elem => elem.appointments.includes(id)) };
     day.spots++;
+    // recreate the days arrays by updating only the day that we had changed the number of spots
     const days = [...state.days].map(elem => {
       if (elem.name === state.day) {
         return day;
@@ -90,11 +83,11 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     }
+    
     return axios
       .delete(`/api/appointments/${id}`)
       .then(() => {
         setState(prev => ({ ...prev, appointments, days }));
-        // setState(prev => ({ ...prev, days: availableSpots(prev) }));
       });
   };
 
@@ -105,4 +98,4 @@ export default function useApplicationData() {
     bookInterview,
     cancelInterview
   }
-}
+};
