@@ -9,10 +9,10 @@ This project makes use of Storybook, Jest and Cypress to test components. The ap
 ## Final Product
 
 ### Manual Navigation
-!["Manual navigation"](link)
+!["Manual navigation"](https://github.com/danilogondim/scheduler/blob/master/docs/manual-navigation.gif?raw=true)
 
 ### Cypress end-to-end test
-!["Cypress end-to-end test"](link)
+!["Cypress end-to-end test"](https://github.com/danilogondim/scheduler/blob/master/docs/cypress-test.gif?raw=true)
 
 
 ## Setup
