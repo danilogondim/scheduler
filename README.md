@@ -8,11 +8,11 @@ This project makes use of Storybook, Jest and Cypress to test components. The ap
 
 ## Final Product
 
-### Description
-!["Description"](link)
+### Manual Navigation
+!["Manual navigation"](link)
 
-### Description
-!["Description"](link)
+### Cypress end-to-end test
+!["Cypress end-to-end test"](link)
 
 
 ## Setup
