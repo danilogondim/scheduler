@@ -8,6 +8,12 @@ This project makes use of Storybook, Jest and Cypress to test components. The ap
 
 ## Final Product
 
+### Description
+!["Description"](link)
+
+### Description
+!["Description"](link)
+
 
 ## Setup
 
@@ -36,6 +42,14 @@ npm test
 npm run storybook
 ```
 ## Running Cypress Test Framework
+
+Before running Cypress, make sure to run the api server in test mode by typing the following command in the server directory:
+
+```sh
+npm run test:server
+```
+
+After running the server in test mode:
 
 ```sh
 npm run cypress
