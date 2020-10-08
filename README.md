@@ -2,9 +2,9 @@
 
 Interview Scheduler is a React application that allows users to book and cancel interviews.
 
-This project was developed as part of Lighthouse Labs' Web Development Bootcamp program, and it is focused in building and testing a React application.
+This project was developed as part of Lighthouse Labs' Web Development Bootcamp program, and it is focused on building and testing a React application.
 
-This project makes use of Storybook, Jest and Cypress to test components. The application was tested using unit, integration and end-to-end testing.
+Interview Scheduler makes use of Storybook, Jest and Cypress to test components. The application was tested using unit, integration and end-to-end testing.
 
 ## Final Product
 
@@ -17,10 +17,10 @@ This project makes use of Storybook, Jest and Cypress to test components. The ap
 
 ## Setup
 
-1. Fork [the Interview Scheduler API repository](https://github.com/danilogondim/scheduler-api), then clone your fork of the repository and follow the repository's README.md instructions to set up the api server.
+1. Fork [the Interview Scheduler API repository](https://github.com/danilogondim/scheduler-api), then clone your fork of the repository and follow the repository's README.md instructions to set up the API server.
 2. Fork this repository, then clone your fork of this repository in a different folder.
 3. Install dependencies using the `npm install` command.
-4. Run the api server.
+4. Run the API server.
 5. Run the development web server using the `npm start` command.
 
 
@@ -43,7 +43,7 @@ npm run storybook
 ```
 ## Running Cypress Test Framework
 
-Before running Cypress, make sure to run the api server in test mode by typing the following command in the server directory:
+Before running Cypress, make sure to run the API server in test mode by typing the following command in the server directory:
 
 ```sh
 npm run test:server
